@@ -695,6 +695,7 @@
 
     // Handler for WORK.INK (unchanged from original, just updated debug prefix)
     function handleWorkInk() {
+        let readArticles2Triggered = false;
         if (panel) panel.show('pleaseSolveCaptcha', 'info');
 
         const startTime = Date.now();
@@ -797,9 +798,18 @@
                 try {
                     switch (monetization) {
                         case 22:
-                            sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'start' } });
-                            sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'read' } });
-                            if (debug) console.log(`[Maid Debug] Faked readArticles2 [${i + 1}/${monetizations.length}]`);
+                            if (!readArticles2Triggered) {
+                                readArticles2Triggered = true;
+                                sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'start' } });
+                                if (debug) console.log(`[Maid Debug] Faked readArticles2 start [${i + 1}/${monetizations.length}]`);
+
+                                if (panel) panel.show('bypassSuccess', 'warning', { time: 15 });
+
+                                setTimeout(() => {
+                                    sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'read' } });
+                                    if (debug) console.log(`[Maid Debug] Faked readArticles2 read [${i + 1}/${monetizations.length}]`);
+                                }, 15000);
+                            }
                             break;
                         case 25:
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'operaGX', payload: { event: 'start' } });
