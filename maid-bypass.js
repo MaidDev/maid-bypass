@@ -5,7 +5,7 @@
     // MAID BYPASS - ULTIMATE EDITION
     // Created by: Maid Dev
     // YouTube: MaidDev | Discord: maidhunter
-    // Version: 2.0.0 ULTIMATE
+    // Version: 2.0.1 ULTIMATE
     // ============================================
 
     const host = location.hostname;
@@ -79,7 +79,7 @@
             gain.gain.value = 0.1;
             osc.start();
             setTimeout(() => osc.stop(), duration);
-        } catch (e) {}
+        } catch (e) { }
     };
 
     // Enhanced Bypass Panel with Cyberpunk theme
@@ -576,7 +576,7 @@
             const message = t(messageKey, replacements);
             const statusText = this.shadow.querySelector('#status-text');
             const statusIcon = this.shadow.querySelector('#status-icon');
-            
+
             if (statusText) statusText.textContent = message;
             if (statusIcon) {
                 statusIcon.className = `status-icon ${type}`;
@@ -773,32 +773,33 @@
                 return;
             }
             if (debug) console.log('[Maid Debug] spoof Workink starting, linkInfo:', sessionController.linkInfo);
-            
+
             const socials = sessionController.linkInfo.socials || [];
             if (debug) console.log('[Maid Debug] Total socials to fake:', socials.length);
-            
+
             for (let i = 0; i < socials.length; i++) {
                 const soc = socials[i];
                 try {
                     if (sendMessageA) {
                         sendMessageA.call(this, types.ss, { url: soc.url });
-                        if (debug) console.log(`[Maid Debug] Faked social [${i+1}/${socials.length}]:`, soc.url);
+                        if (debug) console.log(`[Maid Debug] Faked social [${i + 1}/${socials.length}]:`, soc.url);
                     }
                 } catch (e) {
-                    if (debug) console.error(`[Maid Debug] Error faking social [${i+1}/${socials.length}]:`, soc.url, e);
+                    if (debug) console.error(`[Maid Debug] Error faking social [${i + 1}/${socials.length}]:`, soc.url, e);
                 }
             }
-            
+
             const monetizations = sessionController.linkInfo.monetizations || [];
             if (debug) console.log('[Maid Debug] Total monetizations to fake:', monetizations.length);
-            
+
             for (let i = 0; i < monetizations.length; i++) {
                 const monetization = monetizations[i];
                 try {
                     switch (monetization) {
                         case 22:
+                            sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'start' } });
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'read' } });
-                            if (debug) console.log(`[Maid Debug] Faked readArticles2 [${i+1}/${monetizations.length}]`);
+                            if (debug) console.log(`[Maid Debug] Faked readArticles2 [${i + 1}/${monetizations.length}]`);
                             break;
                         case 25:
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'operaGX', payload: { event: 'start' } });
@@ -809,39 +810,39 @@
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ noteligible: true })
                             }).catch((e) => { if (debug) console.warn('[Maid Debug] operaGX fetch failed:', e); });
-                            if (debug) console.log(`[Maid Debug] Faked operaGX [${i+1}/${monetizations.length}]`);
+                            if (debug) console.log(`[Maid Debug] Faked operaGX [${i + 1}/${monetizations.length}]`);
                             break;
                         case 34:
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'norton', payload: { event: 'start' } });
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'norton', payload: { event: 'installClicked' } });
-                            if (debug) console.log(`[Maid Debug] Faked norton [${i+1}/${monetizations.length}]`);
+                            if (debug) console.log(`[Maid Debug] Faked norton [${i + 1}/${monetizations.length}]`);
                             break;
                         case 71:
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'externalArticles', payload: { event: 'start' } });
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'externalArticles', payload: { event: 'installClicked' } });
-                            if (debug) console.log(`[Maid Debug] Faked externalArticles [${i+1}/${monetizations.length}]`);
+                            if (debug) console.log(`[Maid Debug] Faked externalArticles [${i + 1}/${monetizations.length}]`);
                             break;
                         case 45:
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'pdfeditor', payload: { event: 'installed' } });
-                            if (debug) console.log(`[Maid Debug] Faked pdfeditor [${i+1}/${monetizations.length}]`);
+                            if (debug) console.log(`[Maid Debug] Faked pdfeditor [${i + 1}/${monetizations.length}]`);
                             break;
                         case 57:
                             sendMessageA && sendMessageA.call(this, types.mo, { type: 'betterdeals', payload: { event: 'installed' } });
-                            if (debug) console.log(`[Maid Debug] Faked betterdeals [${i+1}/${monetizations.length}]`);
+                            if (debug) console.log(`[Maid Debug] Faked betterdeals [${i + 1}/${monetizations.length}]`);
                             break;
                         default:
-                            if (debug) console.log(`[Maid Debug] Unknown monetization [${i+1}/${monetizations.length}]:`, monetization);
+                            if (debug) console.log(`[Maid Debug] Unknown monetization [${i + 1}/${monetizations.length}]:`, monetization);
                     }
                 } catch (e) {
-                    if (debug) console.error(`[Maid Debug] Error faking monetization [${i+1}/${monetizations.length}]:`, monetization, e);
+                    if (debug) console.error(`[Maid Debug] Error faking monetization [${i + 1}/${monetizations.length}]:`, monetization, e);
                 }
             }
-            
+
             if (debug) console.log('[Maid Debug] spoof Workink completed');
         }
 
         function trm() {
-            return function(...a) {
+            return function (...a) {
                 const [msgType] = a;
                 if (msgType === types.ad) {
                     if (debug) console.log('[Maid Debug] trm: Skipping adblocker message');
@@ -851,18 +852,18 @@
                     if (debug) console.log('[Maid Debug] Captcha bypassed via TR');
                     triggerBypass('tr');
                 }
-                return sendMessageA ? sendMessageA.apply(this, a): undefined;
+                return sendMessageA ? sendMessageA.apply(this, a) : undefined;
             };
         }
 
         function createLinkInfoProxy() {
-            return function(...args) {
+            return function (...args) {
                 const [info] = args;
                 if (debug) console.log('[Maid Debug] Link info:', info);
                 try {
                     Object.defineProperty(info, 'isAdblockEnabled', {
                         get: () => false,
-                        set: () => {},
+                        set: () => { },
                         configurable: false,
                         enumerable: true
                     });
@@ -870,7 +871,7 @@
                 } catch (e) {
                     if (debug) console.warn('[Maid Debug] Define Property failed:', e);
                 }
-                return onLinkInfoA ? onLinkInfoA.apply(this, args): undefined;
+                return onLinkInfoA ? onLinkInfoA.apply(this, args) : undefined;
             };
         }
 
@@ -896,7 +897,7 @@
         }
 
         function createDestinationProxy() {
-            return function(...args) {
+            return function (...args) {
                 const [data] = args;
                 const secondsPassed = (Date.now() - startTime) / 1000;
                 destinationReceived = true;
@@ -914,7 +915,7 @@
                 } else {
                     startCountdown(data.url, waitTimeSeconds - secondsPassed);
                 }
-                return onLinkDestinationA ? onLinkDestinationA.apply(this, args): undefined;
+                return onLinkDestinationA ? onLinkDestinationA.apply(this, args) : undefined;
             };
         }
 
@@ -993,7 +994,7 @@
                 new Proxy(kit, {
                     get(target, prop) {
                         if (prop === 'start') {
-                            return function(...args) {
+                            return function (...args) {
                                 const [nodes, , opts] = args;
                                 if (nodes?.nodes && opts?.node_ids) {
                                     const idx = opts.node_ids[1];
@@ -1014,7 +1015,7 @@
             const origPromiseAll = unsafeWindow.Promise.all;
             let intercepted = false;
 
-            unsafeWindow.Promise.all = async function(promises) {
+            unsafeWindow.Promise.all = async function (promises) {
                 const result = origPromiseAll.call(this, promises);
                 if (!intercepted) {
                     intercepted = true;
@@ -1035,7 +1036,7 @@
             };
         }
 
-        window.googletag = {cmd: [], _loaded_: true};
+        window.googletag = { cmd: [], _loaded_: true };
 
         const blockedClasses = [
             "adsbygoogle",
@@ -1068,7 +1069,7 @@
                                 if (debug) console.log('[Maid Debug] Removed nested ad by class:', cls);
                             });
                         });
-                        
+
                         blockedIds.forEach((id) => {
                             if (node.id === id) {
                                 node.remove();
@@ -1079,19 +1080,19 @@
                                 if (debug) console.log('[Maid Debug] Removed nested ad by id:', id);
                             });
                         });
-                        
+
                         if (node.matches('.button.large.accessBtn.pos-relative.svelte-bv7qlp') && node.textContent.includes('Go To Destination')) {
                             if (debug) console.log('[Maid Debug] GTD button detected');
-                            
+
                             if (!bypassTriggered) {
                                 if (debug) console.log('[Maid Debug] GTD: Waiting for linkInfo...');
-                                
+
                                 let gtdRetryCount = 0;
-                                
+
                                 function checkAndTriggerGTD() {
                                     const ctrl = sessionController;
                                     const dest = getFunction(ctrl, map.onLD);
-                                    
+
                                     if (ctrl && ctrl.linkInfo && dest.fn) {
                                         triggerBypass('gtd');
                                         if (debug) console.log('[Maid Debug] Captcha bypassed via GTD after', gtdRetryCount, 'seconds');
@@ -1102,9 +1103,9 @@
                                         setTimeout(checkAndTriggerGTD, 1000);
                                     }
                                 }
-                                
+
                                 checkAndTriggerGTD();
-                                
+
                             } else {
                                 if (debug) console.log('[Maid Debug] GTD ignored: bypass already triggered via TR');
                             }
