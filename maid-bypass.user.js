@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Maid Bypass - Ultimate Edition
 // @namespace    http://tampermonkey.net/
-// @version      2.0.1
+// @version      2.0.2
 // @description  Auto bypass for Volcano & Work.ink - Indonesian & English support
 // @author       Maid Dev
 // @match        https://key.volcano.wtf/*
