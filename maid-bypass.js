@@ -916,24 +916,33 @@
             }, 1000);
         }
 
-        function createDestinationProxy() {
+function createDestinationProxy() {
             return function (...args) {
                 const [data] = args;
                 const secondsPassed = (Date.now() - startTime) / 1000;
                 destinationReceived = true;
                 if (debug) console.log('[Maid Debug] Destination data:', data);
 
+                // --- PENGATURAN WAIT TIME ---
+                let extraWaitAfterBypass = 120; // Tambahkan detik di sini (misal: 120 detik)
                 let waitTimeSeconds = localStorage.getItem('maid_speed') === 'true' ? 0 : 5;
+                
+                // Cek link khusus yang butuh waktu lama
                 const url = location.href;
                 if (url.includes('42rk6hcq') || url.includes('ito4wckq') || url.includes('pzarvhq1')) {
                     waitTimeSeconds = localStorage.getItem('maid_speed') === 'true' ? 0 : 38;
                 }
+                
+                // Tambahkan ekstra waktu ke total tunggu
+                const totalWaitTime = waitTimeSeconds + extraWaitAfterBypass;
+                // ----------------------------
 
-                if (secondsPassed >= waitTimeSeconds) {
+                if (secondsPassed >= totalWaitTime) {
                     if (panel) panel.show('backToCheckpoint', 'info');
                     redirect(data.url);
                 } else {
-                    startCountdown(data.url, waitTimeSeconds - secondsPassed);
+                    // Mulai countdown berdasarkan sisa waktu dari totalWaitTime
+                    startCountdown(data.url, totalWaitTime - secondsPassed);
                 }
                 return onLinkDestinationA ? onLinkDestinationA.apply(this, args) : undefined;
             };
