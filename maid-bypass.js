@@ -803,7 +803,7 @@
                                 sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'start' } });
                                 if (debug) console.log(`[Maid Debug] Faked readArticles2 start [${i + 1}/${monetizations.length}]`);
 
-                                let timeLeft = 15;
+                                let timeLeft = 115;
                                 if (panel) panel.show('bypassSuccess', 'warning', { time: timeLeft });
 
                                 const countdownInterval = setInterval(() => {
@@ -924,7 +924,7 @@ function createDestinationProxy() {
                 if (debug) console.log('[Maid Debug] Destination data:', data);
 
                 // --- PENGATURAN WAIT TIME ---
-                let extraWaitAfterBypass = 120; // Tambahkan detik di sini (misal: 120 detik)
+                let extraWaitAfterBypass = 3; // Tambahkan detik di sini (misal: 3 detik)
                 let waitTimeSeconds = localStorage.getItem('maid_speed') === 'true' ? 0 : 5;
                 
                 // Cek link khusus yang butuh waktu lama
