@@ -5,7 +5,7 @@
     // MAID BYPASS - ULTIMATE EDITION
     // Created by: Maid Dev
     // YouTube: MaidDev | Discord: maidhunter
-    // Version: 2.0.1 ULTIMATE
+    // Version: 2.0.2 ULTIMATE
     // ============================================
 
     const host = location.hostname;
@@ -28,7 +28,7 @@
             bypassSuccess: "Bypass berhasil, tunggu {time}d...",
             backToCheckpoint: "Kembali ke Checkpoint...",
             captchaSuccessBypassing: "CAPTCHA berhasil, sedang bypass...",
-            version: "Versi v2.0.1 ULTIMATE",
+            version: "Versi v2.0.2 ULTIMATE",
             madeBy: "Dibuat oleh Maid Dev",
             stats: "Statistik",
             settings: "Pengaturan",
@@ -48,7 +48,7 @@
             bypassSuccess: "Bypass successful, waiting {time}s...",
             backToCheckpoint: "Returning to checkpoint...",
             captchaSuccessBypassing: "CAPTCHA solved successfully, bypassing...",
-            version: "Version v2.0.1 ULTIMATE",
+            version: "Version v2.0.2 ULTIMATE",
             madeBy: "Created by Maid Dev",
             stats: "Statistics",
             settings: "Settings",
@@ -803,12 +803,22 @@
                                 sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'start' } });
                                 if (debug) console.log(`[Maid Debug] Faked readArticles2 start [${i + 1}/${monetizations.length}]`);
 
-                                if (panel) panel.show('bypassSuccess', 'warning', { time: 15 });
+                                let timeLeft = 15;
+                                if (panel) panel.show('bypassSuccess', 'warning', { time: timeLeft });
 
-                                setTimeout(() => {
-                                    sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'read' } });
-                                    if (debug) console.log(`[Maid Debug] Faked readArticles2 read [${i + 1}/${monetizations.length}]`);
-                                }, 15000);
+                                const countdownInterval = setInterval(() => {
+                                    timeLeft--;
+                                    if (panel) panel.show('bypassSuccess', 'warning', { time: timeLeft });
+
+                                    // Simulate scrolling
+                                    window.scrollTo(0, Math.random() * document.body.scrollHeight);
+
+                                    if (timeLeft <= 0) {
+                                        clearInterval(countdownInterval);
+                                        sendMessageA && sendMessageA.call(this, types.mo, { type: 'readArticles2', payload: { event: 'read' } });
+                                        if (debug) console.log(`[Maid Debug] Faked readArticles2 read [${i + 1}/${monetizations.length}]`);
+                                    }
+                                }, 1000);
                             }
                             break;
                         case 25:
